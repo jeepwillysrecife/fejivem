@@ -695,6 +695,50 @@
     }
     .termo-alert.show { display: block; }
 
+
+    .success-pix-lembrete {
+      display: none;
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 10px;
+      padding: 1.2rem 1.25rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    .success-pix-lembrete.show { display: block; }
+    .success-pix-lembrete-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #856404;
+      margin-bottom: .5rem;
+    }
+    .success-pix-lembrete p {
+      font-size: .88rem;
+      color: #533f03;
+      line-height: 1.6;
+      margin-bottom: .75rem;
+    }
+    .btn-whatsapp-comprovante {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      background: #25d366;
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .75rem 1.25rem;
+      border-radius: 6px;
+      transition: background .2s, transform .2s;
+    }
+    .btn-whatsapp-comprovante:hover { background: #1ebe5a; transform: scale(1.03); }
+    .btn-whatsapp-comprovante svg { width: 20px; height: 20px; flex-shrink: 0; }
+
   </style>
 </head>
 <body>
@@ -952,7 +996,7 @@
       </div>
 
       <div class="pix-note">
-        ⚠️ <strong>Importante:</strong> após realizar o pagamento, envie o comprovante pelo WhatsApp para <strong>(81) 9 9926-0000</strong> ou <strong>(81) 9 9615-3001</strong> informando seu nome e veículo para confirmar a inscrição.
+        ⚠️ <strong>Importante:</strong> após realizar o pagamento, envie o comprovante pelo WhatsApp para <strong>(81) 9 9809-7828</strong> informando seu nome e veículo para confirmar a inscrição.
       </div>
     </div>
   </div>
@@ -967,7 +1011,7 @@
 
     <div class="form-box reveal">
       <span class="form-top-badge">⚑ Inscrições Abertas</span>
-      <h3 class="form-title">XI FEJIVEM-PE 2026</h3>
+      <h3 class="form-title">XI FEJIVEM-PE 2025</h3>
       <p class="form-sub">Todos os campos marcados com * são obrigatórios.</p>
 
       <form id="inscricaoForm">
@@ -1057,8 +1101,8 @@
             <label>⚠️ Termo de Responsabilidade *</label>
             <div class="termo-box">
               <div class="termo-scroll" id="termoScroll">
-                <h4>Termo de Ciência e Responsabilidade — XI FEJIVEM-PE 2026</h4>
-                <p>Este Termo de Ciência e Responsabilidade é firmado entre o(a) participante inscrito(a) e a organização do <strong>XI FEJIVEM-PE — Festa dos Jipeiros e Veículos Militares de Pernambuco</strong>, realizado nos dias <strong>25 e 26 de julho de 2026</strong>, no Recife Outlet e arredores de Moreno/São Lourenço da Mata – PE.</p>
+                <h4>Termo de Ciência e Responsabilidade — XI FEJIVEM-PE 2025</h4>
+                <p>Este Termo de Ciência e Responsabilidade é firmado entre o(a) participante inscrito(a) e a organização do <strong>XI FEJIVEM-PE — Festa dos Jipeiros e Veículos Militares de Pernambuco</strong>, realizado nos dias <strong>25 e 26 de julho de 2025</strong>, no Recife Outlet e arredores de Moreno/São Lourenço da Mata – PE.</p>
 
                 <h4>Cláusula 1 — Da Natureza da Atividade</h4>
                 <p>O participante declara estar ciente de que a atividade de <strong>volta na pista off-road (Dia 25)</strong> e/ou a <strong>trilha off-road (Dia 26)</strong> são atividades de aventura com riscos inerentes, podendo envolver:</p>
@@ -1119,7 +1163,7 @@
               <label class="termo-check-row">
                 <input type="checkbox" id="termoCheck" onchange="validarTermo()"/>
                 <span class="termo-check-label">
-                  Li e concordo com o <strong>Termo de Ciência e Responsabilidade</strong> do XI FEJIVEM-PE 2026, assumindo voluntariamente os riscos da atividade de off-road para mim e para os ocupantes do meu veículo.
+                  Li e concordo com o <strong>Termo de Ciência e Responsabilidade</strong> do XI FEJIVEM-PE 2025, assumindo voluntariamente os riscos da atividade de off-road para mim e para os ocupantes do meu veículo.
                 </span>
               </label>
               <div class="termo-alert" id="termoAlert">
@@ -1167,16 +1211,30 @@
     <p class="success-msg">
       <strong id="nomeConfirmado" style="color:var(--red);font-size:1.1rem;display:block;margin-bottom:.5rem;"></strong>
       Sua ficha foi salva na planilha do evento!<br/><br/>
-      Em breve entraremos em contato pelo <strong>WhatsApp</strong> com todos os detalhes.<br/><br/>
       <strong>A Nação 4x4 vai se encontrar! 🚙💨</strong>
     </p>
+
+    <!-- Lembrete Pix — aparece só para quem escolheu Pix -->
+    <div class="success-pix-lembrete" id="pixLembrete">
+      <div class="success-pix-lembrete-title">⚠️ Envie o comprovante Pix!</div>
+      <p>Para confirmar sua inscrição, envie o comprovante do Pix de <strong>R$ 50,00</strong> para o WhatsApp do organizador:</p>
+      <a id="btnWhatsappComprovante" href="#" target="_blank" class="btn-whatsapp-comprovante">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.994 2C6.476 2 2 6.476 2 11.994c0 1.92.52 3.718 1.426 5.263L2.05 22l4.878-1.357A9.943 9.943 0 0 0 11.994 22C17.511 22 22 17.524 22 12.006 22 6.476 17.511 2 11.994 2z"/></svg>
+        Enviar comprovante agora
+      </a>
+    </div>
+
     <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show')">Fechar</button>
   </div>
 </div>
 
 <footer>
-  <p><strong>XI FEJIVEM-PE</strong> · Festa dos Jipeiros e Veículos Militares de Pernambuco · Julho 2026</p>
+  <p><strong>XI FEJIVEM-PE</strong> · Festa dos Jipeiros e Veículos Militares de Pernambuco · Julho 2025</p>
   <p style="margin-top:.5rem">Realização: <strong>@4x4recife</strong> · Recife Outlet · Roseane Cabral Produções</p>
+  <p style="margin-top:.5rem">Apoio: <strong>Jeep Willys Recife</strong> · <strong>Camarás Offroad</strong></p>
+  <p style="margin-top:1rem;border-top:1px solid #ffffff15;padding-top:1rem;font-size:.75rem;opacity:.5">
+    Site desenvolvido por <strong style="opacity:1;color:var(--sand)">Erasmo Morais</strong>
+  </p>
 </footer>
 
 <script>
@@ -1251,7 +1309,7 @@
   });
 
   // ── CONFIG — cole aqui a URL do seu Google Apps Script ────────────────
-  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxUEyB9sLnjTz0CIaAS9xPaxUvhXDQjZdTR_F4hP0ExQMzegPXWBEnJzC8LVH2sr--r-w/exec';
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyt_KtU-HKzy7_4_5X-2CFNFifvrd1RCSkjgyueLngqlYK8CMt2i6-M9ySw-0nVTXNDKw/exec';
   // ───────────────────────────────────────────────────────────────────────
 
   const submitBtn = document.querySelector('.submit-btn');
@@ -1312,6 +1370,29 @@
 
     // Exibe confirmação de sucesso
     document.getElementById('nomeConfirmado').textContent = dados.nome;
+
+    // Lembrete Pix: exibe bloco e monta link WhatsApp com mensagem pré-preenchida
+    const isPix = pag.value === 'dinheiro';
+    const pixLembrete = document.getElementById('pixLembrete');
+    if (isPix) {
+      pixLembrete.classList.add('show');
+      const msgWA = encodeURIComponent(
+        '🚙 *Comprovante Pix — XI FEJIVEM-PE 2026*\n' +
+        '──────────────────\n' +
+        '👤 Nome: ' + dados.nome + '\n' +
+        '🚗 Veículo: ' + dados.veiculo + '\n' +
+        '🔢 Placa: ' + dados.placa + '\n' +
+        '📅 ' + dados.dia + '\n' +
+        '🏁 ' + dados.categoria + '\n' +
+        '──────────────────\n' +
+        '💰 Segue o comprovante do Pix de R$ 50,00.'
+      );
+      document.getElementById('btnWhatsappComprovante').href =
+        'https://wa.me/5581998097828?text=' + msgWA;
+    } else {
+      pixLembrete.classList.remove('show');
+    }
+
     document.getElementById('successOverlay').classList.add('show');
     this.reset();
     document.getElementById('trilha-field').style.display = 'none';
