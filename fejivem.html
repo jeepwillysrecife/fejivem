@@ -1217,7 +1217,28 @@
     <!-- Lembrete Pix — aparece só para quem escolheu Pix -->
     <div class="success-pix-lembrete" id="pixLembrete">
       <div class="success-pix-lembrete-title">⚠️ Envie o comprovante Pix!</div>
-      <p>Para confirmar sua inscrição, envie o comprovante do Pix de <strong>R$ 50,00</strong> para o WhatsApp do organizador:</p>
+      <p>Para confirmar sua inscrição, realize o pagamento de <strong>R$ 50,00</strong> usando os dados abaixo e envie o comprovante pelo WhatsApp:</p>
+
+      <div style="background:#fff;border-radius:8px;padding:1rem;margin-bottom:.85rem;border:1px solid #ffc10740">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+          <span style="font-size:1.2rem">💚</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:#4a7c59">Dados para pagamento Pix</span>
+        </div>
+        <div style="font-size:.85rem;color:#333;line-height:1.8">
+          <div><span style="color:#888">Tipo de chave:</span> <strong>E-mail</strong></div>
+          <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+            <span style="color:#888">Chave:</span>
+            <strong id="pixKeyModal">jeepwillysrecife@gmail.com</strong>
+            <button onclick="copiarChaveModal()" id="btnCopiarModal"
+              style="background:#25d36620;border:1px solid #25d36650;border-radius:4px;color:#1a7a3a;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif">
+              Copiar
+            </button>
+          </div>
+          <div><span style="color:#888">Valor:</span> <strong style="color:#cc1a1a">R$ 50,00</strong></div>
+          <div><span style="color:#888">Favorecido:</span> <strong>Jeep Willys Recife</strong></div>
+        </div>
+      </div>
+
       <a id="btnWhatsappComprovante" href="#" target="_blank" class="btn-whatsapp-comprovante">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.994 2C6.476 2 2 6.476 2 11.994c0 1.92.52 3.718 1.426 5.263L2.05 22l4.878-1.357A9.943 9.943 0 0 0 11.994 22C17.511 22 22 17.524 22 12.006 22 6.476 17.511 2 11.994 2z"/></svg>
         Enviar comprovante agora
@@ -1244,6 +1265,21 @@
     const alert = document.getElementById('termoAlert');
     if (checked) alert.classList.remove('show');
     else alert.classList.add('show');
+  }
+
+  // Copiar chave Pix no modal de sucesso
+  function copiarChaveModal() {
+    navigator.clipboard.writeText('jeepwillysrecife@gmail.com').then(() => {
+      const btn = document.getElementById('btnCopiarModal');
+      btn.textContent = 'Copiado ✓';
+      btn.style.background = '#25d366';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.style.background = '#25d36620';
+        btn.style.color = '#1a7a3a';
+      }, 2500);
+    }).catch(() => alert('Chave Pix: jeepwillysrecife@gmail.com'));
   }
 
   // Copy Pix key
@@ -1309,7 +1345,7 @@
   });
 
   // ── CONFIG — cole aqui a URL do seu Google Apps Script ────────────────
-  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyt_KtU-HKzy7_4_5X-2CFNFifvrd1RCSkjgyueLngqlYK8CMt2i6-M9ySw-0nVTXNDKw/exec';
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxUEyB9sLnjTz0CIaAS9xPaxUvhXDQjZdTR_F4hP0ExQMzegPXWBEnJzC8LVH2sr--r-w/exec';
   // ───────────────────────────────────────────────────────────────────────
 
   const submitBtn = document.querySelector('.submit-btn');
