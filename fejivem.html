@@ -593,28 +593,32 @@
     .success-overlay {
       display: none; position: fixed; inset: 0;
       background: #000000cc; z-index: 2000;
-      align-items: center; justify-content: center; padding: 2rem;
+      align-items: center; justify-content: center;
+      padding: .75rem;
+      overflow-y: auto;
     }
     .success-overlay.show { display: flex; }
     .success-box {
       background: var(--dirt); border: 2px solid var(--red);
-      border-radius: 12px; padding: 3rem 2.5rem;
-      text-align: center; max-width: 440px; width: 100%;
+      border-radius: 12px; padding: 1.25rem 1.25rem 1rem;
+      text-align: center; max-width: 420px; width: 100%;
       animation: popIn .4s cubic-bezier(.175,.885,.32,1.275) both;
+      max-height: 96vh; overflow-y: auto;
     }
     @keyframes popIn { from{ transform:scale(.8); opacity:0; } to{ transform:scale(1); opacity:1; } }
-    .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .success-icon { font-size: 2rem; margin-bottom: .4rem; }
     .success-title {
-      font-family: 'Anton', sans-serif; font-size: 2rem;
-      text-transform: uppercase; color: var(--red); margin-bottom: .5rem;
+      font-family: 'Anton', sans-serif; font-size: 1.5rem;
+      text-transform: uppercase; color: var(--red); margin-bottom: .3rem;
     }
-    .success-msg { color: var(--smoke); line-height: 1.7; margin-bottom: 1.5rem; font-size: .95rem; }
+    .success-msg { color: var(--smoke); line-height: 1.5; margin-bottom: .75rem; font-size: .88rem; }
     .success-name { color: var(--offwhite); font-weight: 700; }
     .success-close {
       background: var(--red); color: #fff; border: none;
-      border-radius: 4px; padding: .75rem 2rem;
+      border-radius: 4px; padding: .6rem 2rem;
       font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
       font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
+      margin-top: .75rem; width: 100%;
     }
 
     /* ── FOOTER ── */
@@ -699,45 +703,45 @@
     .success-pix-lembrete {
       display: none;
       background: #fff3cd;
-      border: 2px solid #ffc107;
-      border-radius: 10px;
-      padding: 1.2rem 1.25rem;
-      margin-bottom: 1.25rem;
+      border: 1.5px solid #ffc107;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-bottom: .75rem;
       text-align: left;
     }
     .success-pix-lembrete.show { display: block; }
     .success-pix-lembrete-title {
       font-family: 'Anton', sans-serif;
-      font-size: 1rem;
+      font-size: .85rem;
       text-transform: uppercase;
       color: #856404;
-      margin-bottom: .5rem;
+      margin-bottom: .35rem;
     }
     .success-pix-lembrete p {
-      font-size: .88rem;
+      font-size: .8rem;
       color: #533f03;
-      line-height: 1.6;
-      margin-bottom: .75rem;
+      line-height: 1.5;
+      margin-bottom: .5rem;
     }
     .btn-whatsapp-comprovante {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: .6rem;
+      gap: .5rem;
       background: #25d366;
       color: #fff;
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: .9rem;
       letter-spacing: .06em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: .75rem 1.25rem;
+      padding: .6rem 1rem;
       border-radius: 6px;
-      transition: background .2s, transform .2s;
+      transition: background .2s;
     }
-    .btn-whatsapp-comprovante:hover { background: #1ebe5a; transform: scale(1.03); }
-    .btn-whatsapp-comprovante svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .btn-whatsapp-comprovante:hover { background: #1ebe5a; }
+    .btn-whatsapp-comprovante svg { width: 18px; height: 18px; flex-shrink: 0; }
 
   </style>
 </head>
@@ -1262,18 +1266,18 @@
       <div class="success-pix-lembrete-title">⚠️ Envie o comprovante Pix!</div>
       <p>Para confirmar sua inscrição, realize o pagamento de <strong>R$ 50,00</strong> usando os dados abaixo e envie o comprovante pelo WhatsApp:</p>
 
-      <div style="background:#fff;border-radius:8px;padding:1rem;margin-bottom:.85rem;border:1px solid #ffc10740">
-        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
-          <span style="font-size:1.2rem">💚</span>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:#4a7c59">Dados para pagamento Pix</span>
+      <div style="background:#fff;border-radius:6px;padding:.75rem;margin-bottom:.6rem;border:1px solid #ffc10740">
+        <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem">
+          <span style="font-size:1rem">💚</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#4a7c59">Dados para pagamento Pix</span>
         </div>
-        <div style="font-size:.85rem;color:#333;line-height:1.8">
+        <div style="font-size:.8rem;color:#333;line-height:1.7">
           <div><span style="color:#888">Tipo de chave:</span> <strong>E-mail</strong></div>
-          <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
             <span style="color:#888">Chave:</span>
             <strong id="pixKeyModal">jeepwillysrecife@gmail.com</strong>
             <button onclick="copiarChaveModal()" id="btnCopiarModal"
-              style="background:#25d36620;border:1px solid #25d36650;border-radius:4px;color:#1a7a3a;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif">
+              style="background:#25d36620;border:1px solid #25d36650;border-radius:4px;color:#1a7a3a;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif">
               Copiar
             </button>
           </div>
