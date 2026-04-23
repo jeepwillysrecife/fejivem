@@ -1072,18 +1072,22 @@
 
           <div class="field full">
             <label>Forma de contribuição *</label>
+            <!-- Aviso valor ambos os dias -->
+            <div id="aviso-ambos" style="display:none;background:#cc1a1a18;border:1px solid #cc1a1a55;border-radius:6px;padding:.6rem 1rem;margin-bottom:.75rem;font-size:.85rem;color:var(--smoke)">
+              🗓️ Você selecionou <strong style="color:var(--offwhite)">ambos os dias</strong> — o valor em dinheiro será de <strong style="color:var(--red)">R$ 100,00</strong> (R$ 50 por dia) ou <strong style="color:var(--offwhite)">2 cestas básicas</strong>.
+            </div>
             <div class="pay-opts">
               <label class="pay-opt">
                 <input type="radio" name="pagamento" value="cesta" required/>
                 <div class="pay-opt-icon">🧺</div>
-                <div class="pay-opt-name">Cesta Básica</div>
-                <div class="pay-opt-desc">Entregar no evento</div>
+                <div class="pay-opt-name" id="pay-name-cesta">Cesta Básica</div>
+                <div class="pay-opt-desc" id="pay-desc-cesta">Entregar no evento</div>
               </label>
               <label class="pay-opt">
                 <input type="radio" name="pagamento" value="dinheiro"/>
                 <div class="pay-opt-icon">💵</div>
-                <div class="pay-opt-name">R$ 50,00</div>
-                <div class="pay-opt-desc">Pix ou dinheiro</div>
+                <div class="pay-opt-name" id="pay-name-dinheiro">R$ 50,00</div>
+                <div class="pay-opt-desc" id="pay-desc-dinheiro">Pix ou dinheiro</div>
               </label>
             </div>
           </div>
@@ -1281,7 +1285,7 @@
               Copiar
             </button>
           </div>
-          <div><span style="color:#888">Valor:</span> <strong style="color:#cc1a1a">R$ 50,00</strong></div>
+          <div><span style="color:#888">Valor:</span> <strong style="color:#cc1a1a" id="pixValorModal">R$ 50,00</strong></div>
           <div><span style="color:#888">Favorecido:</span> <strong>Erasmo José Morais da Silva</strong></div>
         </div>
       </div>
@@ -1357,14 +1361,26 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
 
-  // Show/hide trilha category based on day selection
+  // Show/hide trilha category + atualiza valor conforme dia selecionado
   document.getElementById('dia').addEventListener('change', function() {
-    const tf = document.getElementById('trilha-field');
-    const show = this.value === 'dia26' || this.value === 'ambos';
+    const tf        = document.getElementById('trilha-field');
+    const show      = this.value === 'dia26' || this.value === 'ambos';
+    const isAmbos   = this.value === 'ambos';
+
+    // Trilha category
     tf.style.display = show ? 'flex' : 'none';
     tf.style.flexDirection = 'column';
     tf.style.gap = '.35rem';
     if (!show) document.querySelectorAll('input[name=categoria]').forEach(r => r.checked = false);
+
+    // Aviso ambos os dias
+    document.getElementById('aviso-ambos').style.display = isAmbos ? 'block' : 'none';
+
+    // Atualiza label dos cards de pagamento
+    document.getElementById('pay-name-cesta').textContent    = isAmbos ? '2 Cestas Básicas' : 'Cesta Básica';
+    document.getElementById('pay-desc-cesta').textContent    = isAmbos ? '1 por dia — entregar no evento' : 'Entregar no evento';
+    document.getElementById('pay-name-dinheiro').textContent = isAmbos ? 'R$ 100,00' : 'R$ 50,00';
+    document.getElementById('pay-desc-dinheiro').textContent = isAmbos ? 'R$ 50 por dia — Pix ou dinheiro' : 'Pix ou dinheiro';
   });
 
   // CPF mask
@@ -1430,7 +1446,7 @@
       placa:      document.getElementById('placa').value.trim(),
       dia:        dia === 'dia25' ? 'Dia 25 – Recife Outlet' : dia === 'dia26' ? 'Dia 26 – Trilha Off-Road' : 'Ambos os dias',
       categoria:  categoria ? (categoria === 'leve' ? 'Leve (Ecológica)' : 'Pesada (Desafio Off-Road)') : '—',
-      pagamento:  pag.value === 'cesta' ? 'Cesta Básica' : 'R$ 50,00 (Pix/Dinheiro)',
+      pagamento:  pag.value === 'cesta' ? (dia === 'ambos' ? '2 Cestas Básicas' : 'Cesta Básica') : (dia === 'ambos' ? 'R$ 100,00 (Pix/Dinheiro)' : 'R$ 50,00 (Pix/Dinheiro)'),
       obs:        document.getElementById('obs').value.trim() || '—',
     };
 
@@ -1456,9 +1472,17 @@
 
     // Lembrete Pix: exibe bloco e monta link WhatsApp com mensagem pré-preenchida
     const isPix = pag.value === 'dinheiro';
+    const isAmbos = dia === 'ambos';
+    const valorPix = isAmbos ? 'R$ 100,00' : 'R$ 50,00';
     const pixLembrete = document.getElementById('pixLembrete');
     if (isPix) {
       pixLembrete.classList.add('show');
+      // Atualiza valor no bloco pix
+      document.getElementById('pixValorModal').textContent = valorPix;
+      document.querySelector('.success-pix-lembrete p').innerHTML =
+        'Para confirmar sua inscrição, realize o pagamento de <strong>' + valorPix + '</strong>' +
+        (isAmbos ? ' (R$ 50,00 por dia)' : '') +
+        ' usando os dados abaixo e envie o comprovante pelo WhatsApp:';
       const msgWA = encodeURIComponent(
         '🚙 *Comprovante Pix — XI FEJIVEM-PE 2026*\n' +
         '──────────────────\n' +
@@ -1468,7 +1492,7 @@
         '📅 ' + dados.dia + '\n' +
         '🏁 ' + dados.categoria + '\n' +
         '──────────────────\n' +
-        '💰 Segue o comprovante do Pix de R$ 50,00.'
+        '💰 Segue o comprovante do Pix de ' + valorPix + '.'
       );
       document.getElementById('btnWhatsappComprovante').href =
         'https://wa.me/5581998097828?text=' + msgWA;
