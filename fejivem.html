@@ -476,6 +476,32 @@
     }
     .pix-note strong { color: var(--offwhite); }
 
+    /* ── TIPO DE PARTICIPAÇÃO ── */
+    .tipo-opt {
+      border: 2px solid #ffffff18;
+      border-radius: 10px;
+      padding: 1rem .85rem;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .15s;
+      text-align: center;
+      position: relative;
+      background: #ffffff06;
+    }
+    .tipo-opt:hover { background: #ffffff0e; transform: translateY(-2px); }
+    .tipo-opt input[type=radio] { position:absolute; opacity:0; width:0; height:0; }
+    .tipo-opt:has(input:checked) {
+      border-color: var(--red);
+      background: #cc1a1a18;
+      box-shadow: 0 0 0 1px var(--red);
+    }
+    .tipo-icon { font-size: 2rem; margin-bottom: .35rem; }
+    .tipo-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem; text-transform: uppercase;
+      color: var(--offwhite); margin-bottom: .2rem;
+    }
+    .tipo-desc { font-size: .75rem; color: var(--smoke); line-height: 1.5; }
+
     /* ── FORM ── */
     .form-section { background: var(--mud); }
     .form-box {
@@ -1019,6 +1045,52 @@
       <p class="form-sub">Todos os campos marcados com * são obrigatórios.</p>
 
       <form id="inscricaoForm">
+
+        <!-- PASSO 1: Seleção do tipo de participação -->
+        <div id="passo1">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sand);margin-bottom:.75rem">
+            Passo 1 — Como você vai participar? *
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem" id="tipo-grid">
+
+            <label class="tipo-opt" data-val="visitante">
+              <input type="radio" name="tipo_participacao" value="visitante"/>
+              <div class="tipo-icon">🎟️</div>
+              <div class="tipo-name">Visitante</div>
+              <div class="tipo-desc">Dia 25 · Sem veículo<br>R$ 15 ou 2kg de alimentos</div>
+            </label>
+
+            <label class="tipo-opt" data-val="dia25">
+              <input type="radio" name="tipo_participacao" value="dia25"/>
+              <div class="tipo-icon">🚗</div>
+              <div class="tipo-name">Dia 25</div>
+              <div class="tipo-desc">Recife Outlet · Com veículo<br>Cesta básica ou R$ 50</div>
+            </label>
+
+            <label class="tipo-opt" data-val="dia26">
+              <input type="radio" name="tipo_participacao" value="dia26"/>
+              <div class="tipo-icon">🏁</div>
+              <div class="tipo-name">Dia 26</div>
+              <div class="tipo-desc">Trilha Off-Road<br>Cesta básica ou R$ 50</div>
+            </label>
+
+            <label class="tipo-opt" data-val="ambos">
+              <input type="radio" name="tipo_participacao" value="ambos"/>
+              <div class="tipo-icon">📅</div>
+              <div class="tipo-name">Ambos os dias</div>
+              <div class="tipo-desc">Dias 25 e 26 · Com veículo<br>2 cestas ou R$ 100</div>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- PASSO 2: Campos do formulário (aparecem após seleção) -->
+        <div id="passo2" style="display:none">
+          <div style="height:1px;background:#ffffff15;margin:1.5rem 0"></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sand);margin-bottom:1rem">
+            Passo 2 — Preencha seus dados
+          </div>
+
         <div class="fg">
 
           <div class="field">
@@ -1030,28 +1102,31 @@
             <input type="tel" id="whatsapp" placeholder="(81) 9 0000-0000" required/>
           </div>
 
+          <div id="fields-veiculo-grupo" style="display:contents">
           <div class="field">
             <label>CPF *</label>
-            <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" required/>
+            <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"/>
           </div>
           <div class="field">
             <label>Cidade / Estado *</label>
-            <input type="text" id="cidade" placeholder="Ex: Recife, PE" required/>
+            <input type="text" id="cidade" placeholder="Ex: Recife, PE"/>
           </div>
 
           <div class="field full">
             <label>Veículo (Marca, Modelo e Ano) *</label>
-            <input type="text" id="veiculo" placeholder="Ex: Jeep Wrangler 2018" required/>
+            <input type="text" id="veiculo" placeholder="Ex: Jeep Wrangler 2018"/>
+          </div>
           </div>
 
-          <div class="field full">
-            <label>Dia de Participação *</label>
-            <select id="dia" required>
-              <option value="">— Selecione —</option>
-              <option value="dia25">📅 Dia 25 — Recife Outlet (exposição / pista)</option>
-              <option value="dia26">📅 Dia 26 — Trilhas Off-Road</option>
-              <option value="ambos">📅 Ambos os dias</option>
-            </select>
+          <!-- Campo dia oculto (controlado pela seleção visual acima) -->
+          <input type="hidden" id="dia" value=""/>
+
+          <!-- Campos só para visitante (sem carro) -->
+          <div id="fields-visitante" style="display:none;grid-column:1/-1">
+            <div style="background:#1b3a1e;border:1px solid #2d8a4055;border-radius:8px;padding:.9rem 1.1rem;font-size:.85rem;color:var(--smoke);line-height:1.6">
+              🎟️ <strong style="color:#4ade80">Ingresso Visitante — Dia 25</strong><br>
+              Entrada no evento sem veículo. Não inclui acesso à pista off-road.
+            </div>
           </div>
 
           <div class="field full" id="trilha-field" style="display:none">
@@ -1072,14 +1147,18 @@
 
           <div class="field full">
             <label>Forma de contribuição *</label>
-            <!-- Aviso valor ambos os dias -->
+            <!-- Aviso visitante -->
+            <div id="aviso-visitante" style="display:none;background:#1b3a1e;border:1px solid #2d8a4055;border-radius:6px;padding:.6rem 1rem;margin-bottom:.75rem;font-size:.85rem;color:var(--smoke)">
+              🎟️ <strong style="color:#4ade80">Ingresso Visitante</strong> — R$ 15,00 ou 2kg de alimentos não perecíveis.
+            </div>
+            <!-- Aviso ambos os dias -->
             <div id="aviso-ambos" style="display:none;background:#cc1a1a18;border:1px solid #cc1a1a55;border-radius:6px;padding:.6rem 1rem;margin-bottom:.75rem;font-size:.85rem;color:var(--smoke)">
               🗓️ Você selecionou <strong style="color:var(--offwhite)">ambos os dias</strong> — o valor em dinheiro será de <strong style="color:var(--red)">R$ 100,00</strong> (R$ 50 por dia) ou <strong style="color:var(--offwhite)">2 cestas básicas</strong>.
             </div>
             <div class="pay-opts">
               <label class="pay-opt">
                 <input type="radio" name="pagamento" value="cesta" required/>
-                <div class="pay-opt-icon">🧺</div>
+                <div class="pay-opt-icon" id="pay-icon-cesta">🧺</div>
                 <div class="pay-opt-name" id="pay-name-cesta">Cesta Básica</div>
                 <div class="pay-opt-desc" id="pay-desc-cesta">Entregar no evento</div>
               </label>
@@ -1105,7 +1184,7 @@
         </div>
 
 
-          <div class="field full">
+          <div class="field full" id="termo-field">
             <label>⚠️ Termo de Responsabilidade *</label>
             <div class="termo-box">
               <div class="termo-scroll" id="termoScroll">
@@ -1181,6 +1260,8 @@
           </div>
 
         <button type="submit" class="submit-btn">🚙 CONFIRMAR INSCRIÇÃO — XI FEJIVEM</button>
+
+        </div><!-- fim passo2 -->
       </form>
     </div>
   </div>
@@ -1361,26 +1442,75 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
 
-  // Show/hide trilha category + atualiza valor conforme dia selecionado
-  document.getElementById('dia').addEventListener('change', function() {
-    const tf        = document.getElementById('trilha-field');
-    const show      = this.value === 'dia26' || this.value === 'ambos';
-    const isAmbos   = this.value === 'ambos';
+  // Seleção visual do tipo de participação — Passo 1
+  document.querySelectorAll('input[name=tipo_participacao]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const val         = this.value;
+      const isVisitante = val === 'visitante';
+      const isAmbos     = val === 'ambos';
+      const showTrilha  = val === 'dia26' || val === 'ambos';
 
-    // Trilha category
-    tf.style.display = show ? 'flex' : 'none';
-    tf.style.flexDirection = 'column';
-    tf.style.gap = '.35rem';
-    if (!show) document.querySelectorAll('input[name=categoria]').forEach(r => r.checked = false);
+      // Atualiza campo hidden dia
+      document.getElementById('dia').value = val;
 
-    // Aviso ambos os dias
-    document.getElementById('aviso-ambos').style.display = isAmbos ? 'block' : 'none';
+      // Mostra passo 2
+      document.getElementById('passo2').style.display = 'block';
+      document.getElementById('passo2').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Atualiza label dos cards de pagamento
-    document.getElementById('pay-name-cesta').textContent    = isAmbos ? '2 Cestas Básicas' : 'Cesta Básica';
-    document.getElementById('pay-desc-cesta').textContent    = isAmbos ? '1 por dia — entregar no evento' : 'Entregar no evento';
-    document.getElementById('pay-name-dinheiro').textContent = isAmbos ? 'R$ 100,00' : 'R$ 50,00';
-    document.getElementById('pay-desc-dinheiro').textContent = isAmbos ? 'R$ 50 por dia — Pix ou dinheiro' : 'Pix ou dinheiro';
+      // Campos de veículo/CPF/cidade
+      const grupoVeiculo = document.getElementById('fields-veiculo-grupo');
+      grupoVeiculo.style.display = isVisitante ? 'none' : 'contents';
+      document.getElementById('cpf').required    = !isVisitante;
+      document.getElementById('cidade').required = !isVisitante;
+      document.getElementById('veiculo').required = !isVisitante;
+
+      // Placa
+      const placaParent = document.getElementById('placa').closest('.field');
+      if (placaParent) placaParent.style.display = isVisitante ? 'none' : '';
+
+      // Info visitante
+      document.getElementById('fields-visitante').style.display = isVisitante ? 'block' : 'none';
+
+      // Trilha
+      const tf = document.getElementById('trilha-field');
+      tf.style.display = showTrilha ? 'flex' : 'none';
+      tf.style.flexDirection = 'column'; tf.style.gap = '.35rem';
+      if (!showTrilha) document.querySelectorAll('input[name=categoria]').forEach(r => r.checked = false);
+
+      // Avisos
+      document.getElementById('aviso-visitante').style.display = isVisitante ? 'block' : 'none';
+      document.getElementById('aviso-ambos').style.display     = isAmbos     ? 'block' : 'none';
+
+      // Labels pagamento
+      if (isVisitante) {
+        document.getElementById('pay-icon-cesta').textContent    = '🌽';
+        document.getElementById('pay-name-cesta').textContent    = '2kg de Alimentos';
+        document.getElementById('pay-desc-cesta').textContent    = 'Não perecíveis — entregar no evento';
+        document.getElementById('pay-name-dinheiro').textContent = 'R$ 15,00';
+        document.getElementById('pay-desc-dinheiro').textContent = 'Pix ou dinheiro';
+      } else if (isAmbos) {
+        document.getElementById('pay-icon-cesta').textContent    = '🧺';
+        document.getElementById('pay-name-cesta').textContent    = '2 Cestas Básicas';
+        document.getElementById('pay-desc-cesta').textContent    = '1 por dia — entregar no evento';
+        document.getElementById('pay-name-dinheiro').textContent = 'R$ 100,00';
+        document.getElementById('pay-desc-dinheiro').textContent = 'R$ 50 por dia — Pix ou dinheiro';
+      } else {
+        document.getElementById('pay-icon-cesta').textContent    = '🧺';
+        document.getElementById('pay-name-cesta').textContent    = 'Cesta Básica';
+        document.getElementById('pay-desc-cesta').textContent    = 'Entregar no evento';
+        document.getElementById('pay-name-dinheiro').textContent = 'R$ 50,00';
+        document.getElementById('pay-desc-dinheiro').textContent = 'Pix ou dinheiro';
+      }
+
+      // Termo de responsabilidade — oculta para visitante
+      const termoField = document.getElementById('termo-field');
+      termoField.style.display = isVisitante ? 'none' : '';
+      document.getElementById('termoCheck').required = !isVisitante;
+      if (isVisitante) {
+        document.getElementById('termoCheck').checked = false;
+        document.getElementById('termoAlert').classList.remove('show');
+      }
+    });
   });
 
   // CPF mask
@@ -1419,15 +1549,17 @@
     const pag = document.querySelector('input[name=pagamento]:checked');
     if (!pag) { alert('Por favor, selecione a forma de contribuição.'); return; }
 
-    // Valida termo de responsabilidade
+    const dia = document.getElementById('dia').value;
+    const isVisitante = dia === 'visitante';
+
+    // Valida termo de responsabilidade (apenas para participantes com veículo)
     const termo = document.getElementById('termoCheck');
-    if (!termo.checked) {
+    if (!isVisitante && !termo.checked) {
       document.getElementById('termoAlert').classList.add('show');
       document.getElementById('termoCheck').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    const dia = document.getElementById('dia').value;
     let categoria = '';
     if (dia === 'dia26' || dia === 'ambos') {
       const cat = document.querySelector('input[name=categoria]:checked');
@@ -1440,13 +1572,15 @@
       data_hora:  new Date().toLocaleString('pt-BR', { timeZone: 'America/Recife' }),
       nome:       document.getElementById('nome').value.trim(),
       whatsapp:   document.getElementById('whatsapp').value.trim(),
-      cpf:        document.getElementById('cpf').value.trim(),
-      cidade:     document.getElementById('cidade').value.trim(),
-      veiculo:    document.getElementById('veiculo').value.trim(),
-      placa:      document.getElementById('placa').value.trim(),
-      dia:        dia === 'dia25' ? 'Dia 25 – Recife Outlet' : dia === 'dia26' ? 'Dia 26 – Trilha Off-Road' : 'Ambos os dias',
+      cpf:        isVisitante ? '—' : document.getElementById('cpf').value.trim(),
+      cidade:     isVisitante ? '—' : document.getElementById('cidade').value.trim(),
+      veiculo:    isVisitante ? 'Visitante (sem veículo)' : document.getElementById('veiculo').value.trim(),
+      placa:      isVisitante ? '—' : document.getElementById('placa').value.trim(),
+      dia:        dia === 'visitante' ? 'Dia 25 – Visitante (sem veículo)' : dia === 'dia25' ? 'Dia 25 – Recife Outlet' : dia === 'dia26' ? 'Dia 26 – Trilha Off-Road' : 'Ambos os dias',
       categoria:  categoria ? (categoria === 'leve' ? 'Leve (Ecológica)' : 'Pesada (Desafio Off-Road)') : '—',
-      pagamento:  pag.value === 'cesta' ? (dia === 'ambos' ? '2 Cestas Básicas' : 'Cesta Básica') : (dia === 'ambos' ? 'R$ 100,00 (Pix/Dinheiro)' : 'R$ 50,00 (Pix/Dinheiro)'),
+      pagamento:  pag.value === 'cesta'
+        ? (isVisitante ? '2kg de Alimentos' : dia === 'ambos' ? '2 Cestas Básicas' : 'Cesta Básica')
+        : (isVisitante ? 'R$ 15,00 (Pix/Dinheiro)' : dia === 'ambos' ? 'R$ 100,00 (Pix/Dinheiro)' : 'R$ 50,00 (Pix/Dinheiro)'),
       obs:        document.getElementById('obs').value.trim() || '—',
     };
 
@@ -1473,7 +1607,7 @@
     // Lembrete Pix: exibe bloco e monta link WhatsApp com mensagem pré-preenchida
     const isPix = pag.value === 'dinheiro';
     const isAmbos = dia === 'ambos';
-    const valorPix = isAmbos ? 'R$ 100,00' : 'R$ 50,00';
+    const valorPix = isVisitante ? 'R$ 15,00' : isAmbos ? 'R$ 100,00' : 'R$ 50,00';
     const pixLembrete = document.getElementById('pixLembrete');
     if (isPix) {
       pixLembrete.classList.add('show');
@@ -1502,7 +1636,12 @@
 
     document.getElementById('successOverlay').classList.add('show');
     this.reset();
+    document.getElementById('dia').value = '';
+    document.getElementById('passo2').style.display = 'none';
     document.getElementById('trilha-field').style.display = 'none';
+    document.getElementById('termo-field').style.display = '';
+    document.getElementById('termoCheck').checked = false;
+    document.getElementById('termoAlert').classList.remove('show');
 
     // Restaura botão
     submitBtn.disabled = false;
